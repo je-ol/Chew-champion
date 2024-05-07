@@ -4,30 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue app</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Chew Champion</title>
+    <!--    <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="index.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
-        <nav class="flex justify-around items-center bg-black text-white h-[80px] ">
-            <div class="flex gap-3">
-                <p>Logo</p>
-                <p>Page name</p>
+    <div id="app" class="bg-[#f1f2f6] h-[100vh] flex flex-col">
+        <nav class="flex justify-around items-center bg-[#27187e] text-white h-[80px] ">
+            <div class="flex gap-3 items-center cursor-pointer" @click.prevent="activePage = 0">
+                <img src="./assets/burger.png" alt="">
+                <p class="text-3xl uppercase" id="logo">{{title}}</p>
             </div>
-            <div >
-                <ul class="flex gap-3">
-                    <li>Home</li>
-                    <li>About</li>
-                    <li>Contact</li>
-                </ul>
+
+            <ul class="flex gap-3 w-[30%] justify-around cursor-pointer">
+                <li v-for="(page, index) in pages" :key="index" class="font-bold text-white text-2xl">
+                    <a 
+                    :href="page.link.url" 
+                    :title="`This link goes to the ${page.link.text} page`"
+                    :class="{active: activePage === index}"
+                        @click.prevent="activePage = index">{{page.link.text}}</a>
+                </li>
+            </ul>
+            <div class="flex gap-6 text-base h-[50%] items-center">
+                <button class="bg-[#758bfd] px-4 rounded-md h-[100%] font-bold">LOGIN</button>
+                <button class="bg-[#758bfd] px-4 rounded-md h-[100%] font-bold">REGISTER</button>
+                <div class="h-[48px] w-[48px] bg-white/80 rounded-full cursor-pointer"></div>
             </div>
-            <div>
-                Avatar
-            </div>
+
         </nav>
-       <h1>{{ message }}</h1>
-       <p>{{ content }}</p>
+        <main class="m-auto">
+            <h1 class="text-2xl font-bold">{{ pages[activePage].pageTitle }}</h1>
+            <p>{{ pages[activePage].pageContent }}</p>
+        </main>
+        <footer class="flex h-[100px] bg-[#aeb8fe] text-white">
+            <p class="m-auto font-bold [text-shadow:_1px_1px_1px_rgb(0_0_0_/_100%)]">&copy; 2021 Chew Champion</p>
+        </footer>
+
     </div>
 
 
@@ -37,8 +50,27 @@
         Vue.createApp({
             data() {
                 return {
+                    title: 'Chew Champion',
                     message: 'Hello Vue 3',
-                    content: 'This is the page\'s content'
+                    content: 'This is the page\'s content',
+                    activePage: 0,
+                    pages: [
+                        {
+                            link: { text: 'Front page', url: '/' },
+                            pageTitle: 'Front page',
+                            pageContent: 'This is the front page content'
+                        },
+                        {
+                            link: { text: 'Feed', url: '/feed.html' },
+                            pageTitle: 'Feed',
+                            pageContent: 'This is the feed page content'
+                        },
+                        {
+                            link: { text: 'Contact', url: '/contact.html' },
+                            pageTitle: 'Contact',
+                            pageContent: 'This is the contact page content'
+                        }
+                    ]
                 }
             }
         }).mount('#app')
