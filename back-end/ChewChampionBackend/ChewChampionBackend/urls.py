@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.routers import SimpleRouter
+from burger.views import BurgerViewSet
+
+router = SimpleRouter()
+
+router.register(r'burger', BurgerViewSet)
 
 urlpatterns = [
     path("polls/", include("polls.urls")),
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += router.urls
