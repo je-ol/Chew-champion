@@ -11,34 +11,34 @@
 
 <body>
     <div id="app" class="bg-[#f1f2f6] h-[100vh] flex flex-col">
-        <nav class="flex justify-around items-center bg-[#27187e] text-white h-[80px] ">
-            <div class="flex gap-3 items-center cursor-pointer" @click.prevent="activePage = 0">
+        <nav class="flex justify-around items-center h-[80px] text-white" :class="[`bg-[${theme}]`]">
+            <div class="flex gap-3 items-center cursor-pointer text-white" @click.prevent="activePage = 0">
                 <img src="./assets/burger.png" alt="">
                 <p class="text-3xl uppercase" id="logo">{{title}}</p>
             </div>
 
             <ul class="flex gap-3 w-[30%] justify-around cursor-pointer">
-                <li v-for="(page, index) in pages" :key="index" class="font-bold text-white text-2xl">
-                    <a 
-                    :href="page.link.url" 
-                    :title="`This link goes to the ${page.link.text} page`"
-                    :class="{active: activePage === index}"
+                <li v-for="(page, index) in pages" :key="index">
+                    <a :href="page.link.url" :title="`This link goes to the ${page.link.text} page`"
+                        class="navLink font-bold  text-2xl" v-bind:class="{ active: activePage === index }"
                         @click.prevent="activePage = index">{{page.link.text}}</a>
                 </li>
             </ul>
             <div class="flex gap-6 text-base h-[50%] items-center">
+                <img src="/assets/dark-mode.png" alt="" @click.prevent="changeTheme()">
                 <button class="bg-[#758bfd] px-4 rounded-md h-[100%] font-bold">LOGIN</button>
                 <button class="bg-[#758bfd] px-4 rounded-md h-[100%] font-bold">REGISTER</button>
-                <div class="h-[48px] w-[48px] bg-white/80 rounded-full cursor-pointer"></div>
+                <div class="flex h-[48px] w-[48px] bg-white/80 rounded-full cursor-pointer border-solid border-white">
+                    <img src="/assets/avatar-02.png" alt=""
+                        class="h-[44px] w-[46px] m-auto rounded-full cover border-solid border-white border-[1px]">
+                </div>
             </div>
 
         </nav>
-        <main class="m-auto">
-            <h1 class="text-2xl font-bold">{{ pages[activePage].pageTitle }}</h1>
-            <p>{{ pages[activePage].pageContent }}</p>
-        </main>
+        <page-content 
+        :page="pages[activePage]"></page-content>
         <footer class="flex h-[100px] bg-[#aeb8fe] text-white">
-            <p class="m-auto font-bold [text-shadow:_1px_1px_1px_rgb(0_0_0_/_100%)]">&copy; 2021 Chew Champion</p>
+            <p class="m-auto font-bold [text-shadow:_1px_1px_1px_rgb(0_0_0_/_100%)]">&copy; 2024 Chew Champion</p>
         </footer>
 
     </div>
@@ -47,13 +47,14 @@
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-        Vue.createApp({
+        const app = Vue.createApp({
             data() {
                 return {
                     title: 'Chew Champion',
                     message: 'Hello Vue 3',
                     content: 'This is the page\'s content',
                     activePage: 0,
+                    theme: '#27187e',
                     pages: [
                         {
                             link: { text: 'Front page', url: '/' },
@@ -72,8 +73,23 @@
                         }
                     ]
                 }
+            },
+            methods: {
+                changeTheme() {
+                    this.theme = this.theme === '#27187e' ? '#FFC787' : '#27187e'
+                }
             }
-        }).mount('#app')
+        })
+        app.component('page-content', {
+            props: ['page'],
+            template: `        
+            <main class="m-auto">
+                <h1 class="text-2xl font-bold">{{page.pageTitle}}</h1>
+                <p>{{page.pageContent}}</p>
+            </main>`,
+        })
+
+        app.mount('#app')
     </script>
 </body>
 
