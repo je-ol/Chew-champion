@@ -5,10 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background-color: #f3f4f6;
+}
 #logo {
     font-family: "Lilita One", sans-serif;
 }
 
-.navLink.active {
+#navbar .navLink.active {
     color: rgba(255, 255, 255, 0.566);
 }
