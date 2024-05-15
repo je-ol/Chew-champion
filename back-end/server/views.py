@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PostsSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
@@ -43,3 +43,17 @@ def test_token(request):
 @api_view(['GET'])
 def hello(request):
     return Response({"message" : "Hello, world!"})
+
+@api_view(['GET'])
+def privet(request):
+    return Response({"сообщение" : "Привет, мир!"})
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_post(request):
+    serializer = PostsSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
