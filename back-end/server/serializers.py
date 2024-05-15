@@ -8,13 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'password', 'email']
 
 class PostsSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Posts
-        fields = ['post_id', 'title', 'content']
+        fields = ['user_id','post_id', 'title', 'content']
 
 class CommentsSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    post = PostsSerializer()
+    user_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    post_id = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Comments
-        fields = ['comment_id', 'user_id', 'content', 'post_id']
+        fields = ['comment_id', 'user_id', 'content', 'post_id', 'date']
