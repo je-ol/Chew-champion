@@ -8,14 +8,18 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'password', 'email']
 
 class PostsSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Posts
-        fields = ['user_id','post_id', 'title', 'content']
+        fields = ['user','post', 'title', 'content']
 
 class CommentsSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(read_only=True)
-    post_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    post = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Comments
-        fields = ['comment_id', 'user_id', 'content', 'post_id', 'date']
+        fields = ['comment', 'user', 'content', 'post', 'date']
+
+    # def create(self, validated_data):
+    #     user = self.context['request'].user
+    #     return Comments.objects.create(user_id_id=user.id, **validated_data)
