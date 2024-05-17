@@ -19,7 +19,3 @@ class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
         fields = ['comment', 'user', 'content', 'post', 'date']
-
-    # def create(self, validated_data):
-    #     user = self.context['request'].user
-    #     return Comments.objects.create(user_id_id=user.id, **validated_data)
