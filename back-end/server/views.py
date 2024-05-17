@@ -9,6 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import viewsets
+from rest_framework.decorators import action
 
 class LoginView(APIView):
     def post(self, request):
@@ -53,10 +54,12 @@ class PostsViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    # @action(detail=False, methods=['GET'])
-    def get_queryset(self):
+    @action(detail=False, methods=['GET'])
+    def my_posts(self, request):
         user = self.request.user
-        return Posts.objects.filter(user_id=user)
+        my_posts = Posts.objects.filter(user_id=user)
+        serializer = self.get_serializer(my_posts,many=True)
+        return Response(serializer.data)
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -76,6 +79,11 @@ class PostsViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.user_id != request.user.id:
+            return Response({"detail": "You do not have permission to update this post."}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
@@ -88,3 +96,9 @@ class CommentsViewSet(viewsets.ModelViewSet):
         user = User.objects.get(id=self.request.user.id)
         post = Posts.objects.get(post=self.request.data['post_id'])
         serializer.save(user=user, post=post)
+        
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.user_id != request.user.id:
+            return Response({"detail": "You do not have permission to update this comment."}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
