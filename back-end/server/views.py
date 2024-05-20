@@ -10,6 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.decorators import action
+import cloudinary
+from cloudinary.uploader import upload
+import os
 
 class LoginView(APIView):
     def post(self, request):
@@ -84,6 +87,30 @@ class PostsViewSet(viewsets.ModelViewSet):
         if instance.user_id != request.user.id:
             return Response({"detail": "You do not have permission to update this post."}, status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
+
+    @action(detail=False, methods=['POST'])
+    def upload_image(self, request):
+        image = request.FILES.get('image')
+        title = request.data.get('title', '')
+        content = request.data.get('content', '')
+        if not image:
+            return Response({"detail": "No image provided."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        cloudinary.config( 
+            cloud_name = os.getenv("cloud_name"), 
+            api_key = os.getenv("api_key"), 
+            api_secret = os.getenv("api_secret"),
+            secure=True
+        )
+
+        upload_result = upload(image)
+        image_url = upload_result["secure_url"]
+
+        post = Posts.objects.create(image_url=image_url, user=request.user, title=title, content=content)
+        post.save()
+
+        serializer = self.get_serializer(post)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
