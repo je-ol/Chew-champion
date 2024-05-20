@@ -8,6 +8,7 @@ class Posts(models.Model):
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
+    image_url = models.URLField(blank=True, null=True)
 
 class Comments(models.Model):
     comment = models.AutoField(primary_key=True)
