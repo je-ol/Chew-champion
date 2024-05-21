@@ -1,0 +1,69 @@
+<template>
+    <div id="container" 
+    class="flex flex-row w-[100%] justify-center gap-[3%] mt-[80px]">
+        <div id="content" class="flex flex-wrap justify-center items-center gap-2 bg-black/10 w-[70%] h-[630px] my-10 rounded-3xl">
+            <div
+                v-for="(post, index) in posts.slice(0, 9)"
+                :key="index"
+                :style="{ backgroundImage: `url(${post.image_url})` }"
+                class="flex flex-col justify-end w-[386px] h-[192px] bg-black/20 bg-cover bg-center"
+                :class="{ 'hover:bg-black/30': true }">
+                <router-link :to="`/${post.post}`">
+                    <h1 class="bg-black/30 text-white">{{ post.title }}</h1>
+                    <p class="bg-black/30 text-white">{{ post.content.slice(0, 45) }}...</p>
+                </router-link>
+            </div>
+        </div>
+        <div id="side-section"
+        class="flex flex-col items-center w-[20%] h-[630px] my-10 rounded-3xl text-black/60">
+            <div class="flex flex-col items-center w-[80%] h-[380px] mx-auto mt-[30px] text-center " >
+                <h2 class="text-xl font-bold">About Chew Champion</h2>
+                <div class="flex w-[120px] h-[116px] bg-slate-500/20 rounded-full my-4" >
+                <img src="../assets/burger.png" alt=""
+                class="w-[80px] h-[80px] m-auto"></div>
+                <p>Chew Champion is a fun blog about anything related to competitive eating. 
+                    Are you a fan of the sport or a competitor yourself? Then you're more than welcome to join and share your experiences or opinions with our community! </p>
+            </div>
+            <hr class="border-black w-[80%]">
+            <div class="flex flex-col justify-around h-[140px] my-4 ">
+                <h3 class="font-bold">DON'T MISS OUT NEW POSTS!</h3>
+                <input type="email" placeholder="Your email address"
+                class="pl-2 h-[30px] rounded-md">
+                <button class="special-btn h-[30px] bg-[#27187ee2] rounded-sm text-white font-black text-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.9)]">SUBSCRIBE</button>
+            </div>
+        </div>    
+        <CreateButton />
+    </div>
+
+</template>
+<script>
+import axios from '../axios';
+import CreateButton from '../components/CreateButton.vue';
+
+export default {
+    name: 'MainPage',
+    components: {
+        CreateButton
+    },
+    data() {
+        return {
+            posts: [] // Initialize posts array
+        }
+    },
+    created() {
+        this.fetchPosts(); // Call the method to fetch images when the component is created
+        console.log("Fetching posts...");
+    },
+    methods: {
+        async fetchPosts() {
+            try {
+            const response = await axios.get('posts/');
+            this.posts = response.data.reverse(); // Reverse the array to display newest posts first
+            console.log(this.posts);
+            } catch (error) {
+            console.error('Error fetching posts:', error);
+            }
+        }
+    }
+}
+</script>

@@ -1,12 +1,16 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router.js'
-import './index.css'
-import $pages from './data.js'
+import { createApp } from 'vue';
+import './style.css';
+import App from './App.vue';
+import router from './router/router.js';
+import { createPinia } from 'pinia';
+/* import { QuillEditor } from '@vueup/vue-quill' */
 
-const app = createApp(App)
+
+const pinia = createPinia();
+
+const app = createApp(App);
+/* app.component('QuillEditor', QuillEditor) */
 app.use(router);
-
-app.config.globalProperties.$pages = $pages;
+app.use(pinia);
 
 app.mount('#app');

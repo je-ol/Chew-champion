@@ -6,8 +6,15 @@
 @tailwind utilities;
 
 body {
-    background-color: #f3f4f6;
+    background-color: #F1F2F6;
+    
 }
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 #logo {
     font-family: "Lilita One", sans-serif;
 }
