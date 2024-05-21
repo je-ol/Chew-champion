@@ -1,9 +1,9 @@
 from rest_framework.response import Response
-from .serializers import UserSerializer, PostsSerializer, CommentsSerializer
+from .serializers import UserSerializer, PostsSerializer, CommentsSerializer, LikeSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from .models import Posts, Comments
+from .models import Posts, Comments, Like
 from django.shortcuts import get_object_or_404
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -13,6 +13,9 @@ from rest_framework.decorators import action
 import cloudinary
 from cloudinary.uploader import upload
 import os
+from django.db import IntegrityError
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 class LoginView(APIView):
     def post(self, request):
@@ -51,8 +54,22 @@ class PrivetView(APIView):
     def get(self, request):
         return Response({"сообщение" : "Привет, мир!"})
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    @action(detail=False, methods=['GET'])
+    def current_user(self, request):
+        user = self.request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
+
 class PostsViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
+    users = User.objects.all()
     serializer_class = PostsSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -111,7 +128,20 @@ class PostsViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    @action(detail=True, methods=['POST'])
+    def like(self, request, pk=None):
+        user = self.request.user
+        post = self.get_object()
 
+        serializer = LikeSerializer(data={'user': user.id, 'post': post.post})
+        if serializer.is_valid():
+            try:
+                serializer.save()
+            except IntegrityError:
+                return Response({"detail": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Post liked successfully."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentsViewSet(viewsets.ModelViewSet):
     queryset = Comments.objects.all()
@@ -129,3 +159,12 @@ class CommentsViewSet(viewsets.ModelViewSet):
         if instance.user_id != request.user.id:
             return Response({"detail": "You do not have permission to update this comment."}, status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
+
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    filterset_fields = ['user_id']
