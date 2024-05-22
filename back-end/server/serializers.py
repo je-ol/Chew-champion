@@ -12,7 +12,7 @@ class PostsSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = Posts
-        fields = ['user','username', 'post', 'title', 'content', 'image_url']
+        fields = ['user','username', 'post', 'title', 'content', 'image_url', 'date']
 
 class CommentsSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)

@@ -66,7 +66,6 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(user)
         return Response(serializer.data)
 
-
 class PostsViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
     users = User.objects.all()
