@@ -83,7 +83,8 @@ export default {
     // Send formData with both image and JSON data
       const response = await axios.post("/posts/upload_image/", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          Authorization: `token ${localStorage.getItem('token')}`
         }
       });
 

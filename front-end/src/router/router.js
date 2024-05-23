@@ -20,7 +20,6 @@ const routes = [
     {path: '/feasters', component: Feasters, meta: {title: 'Feasters'}},
     {path: '/fans', component: Fans, meta: {title: 'Fans'}},
     {path: '/new-post', component: NewPost, meta: {title: 'New post'}},
-
     {path: '/profile:user', component: Profile, meta: {title: 'Profile'}},
     {path: '/:post', component: SinglePost, meta: {title: 'Post'}},
 

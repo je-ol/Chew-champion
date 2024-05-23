@@ -1,16 +1,18 @@
 <template>
     <div id="container" 
     class="flex flex-row w-[100%] justify-center gap-[3%] mt-[80px]">
-        <div id="content" class="flex flex-wrap justify-center items-center gap-2 bg-black/10 w-[70%] h-[630px] my-10 rounded-3xl">
+        <div id="content" class="grid grid-cols-3 grid-rows-3 gap-2  w-[70%] h-[630px] my-10 rounded-3xl">
             <div
-                v-for="(post, index) in posts.slice(0, 9)"
+                v-for="(post, index) in posts.slice(0, 5)"
                 :key="index"
                 :style="{ backgroundImage: `url(${post.image_url})` }"
-                class="flex flex-col justify-end w-[386px] h-[192px] bg-black/20 bg-cover bg-center"
+                class="flex flex-col justify-end bg-cover bg-center rounded-sm"
                 :class="{ 'hover:bg-black/30': true }">
                 <router-link :to="`/${post.post}`">
-                    <h1 class="bg-black/30 text-white">{{ post.title }}</h1>
-                    <p class="bg-black/30 text-white">{{ post.content.slice(0, 45) }}...</p>
+                    <div class="px-2 bg-black/50">
+                        <h1 class=" text-lg text-[#F1F2F6] font-semibold">{{ post.title }}</h1>
+                        <p class=" text-white/90">{{ post.content.slice(0, 45) }}...</p>
+                    </div>
                 </router-link>
             </div>
         </div>
@@ -57,7 +59,11 @@ export default {
     methods: {
         async fetchPosts() {
             try {
-            const response = await axios.get('posts/');
+            const response = await axios.get('posts/', {
+                headers: {
+                Authorization: `token ${localStorage.getItem('token')}`
+                }
+            });
             this.posts = response.data.reverse(); // Reverse the array to display newest posts first
             console.log(this.posts);
             } catch (error) {
