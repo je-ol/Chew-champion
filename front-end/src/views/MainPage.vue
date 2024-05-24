@@ -24,7 +24,7 @@
                 <div class="flex w-[120px] h-[116px] bg-slate-500/20 rounded-full my-4" >
                 <img src="../assets/burger.png" alt=""
                 class="w-[80px] h-[80px] m-auto"></div>
-                <p>Chew Champion is a fun blog about anything related to competitive eating. 
+                <p>Chew Champion is a fun blog about anything related to competitive eating, as well as eating challenges. 
                     Are you a fan of the sport or a competitor yourself? Then you're more than welcome to join and share your experiences or opinions with our community! </p>
             </div>
             <hr class="border-black w-[80%]">

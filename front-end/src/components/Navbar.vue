@@ -23,7 +23,7 @@
       </div>
       <router-link to="./profile">
         <div v-if="user" class="flex h-[48px] w-[48px] bg-white/80 rounded-full cursor-pointer border-solid border-white">
-          <img src="../assets/avatar-02.png" alt="" class="h-[44px] w-[46px] m-auto rounded-full cover border-solid border-white border-[1px]">
+          <img :src="getAvatarUrl(user.id)" alt="" class="h-[44px] w-[46px] m-auto rounded-full cover border-solid border-white border-[1px]">
         </div>
       </router-link>
     </div>
@@ -33,6 +33,7 @@
 <script>
 import { computed } from 'vue';
 import { useAuthStore } from '../store/auth';
+import { getAvatarUrl } from '../utils/getAvatars.js';
 
 export default {
   name: 'Navbar',
@@ -63,6 +64,7 @@ export default {
     changeTheme() {
       this.theme = this.theme === "bg-[#27187e]" ? "bg-[#ffc787]" : "bg-[#27187e]";
     },
+    getAvatarUrl,
   },
 };
 </script>

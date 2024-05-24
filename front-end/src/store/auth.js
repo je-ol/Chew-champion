@@ -30,4 +30,8 @@ export const useAuthStore = defineStore('auth', {
       localStorage.setItem('token', token);
     },
   },
+  persist: {
+    storage: sessionStorage,
+    paths: ['user'],
+  },
 });

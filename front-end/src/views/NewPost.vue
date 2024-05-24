@@ -32,9 +32,6 @@
           class="bg-[#758bfd] px-4 py-2 rounded-sm font-bold"
           @click="publishBlog"
         >Publish Blog</button>
-        <router-link to="/#">
-          <button class="bg-[#758bfd] px-4 py-2 rounded-sm font-bold">Preview Blog</button>
-        </router-link>
       </div>
     </div>
   </div>

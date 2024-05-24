@@ -2,7 +2,7 @@
     <img 
         src="../assets/heart.png" 
         alt="Like button" 
-        class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#F1F2F6]/80 rounded-full p-1 border-2 border-white"
+        class="mr-4 cursor-pointer w-[42px] h-[42px] bg-[#F1F2F6]/80 rounded-full p-1 border-2 border-white"
         @click="likePost"
       />
       <span>{{ likes }}</span>
@@ -25,8 +25,13 @@
         isLiked: false,
       };
     },
-    created() {
-      this.fetchLikes();
+    async mounted() {
+      await this.fetchLikes();
+    },
+    watch: {
+      postId() {
+        this.fetchLikes();
+      }
     },
     methods: {
       async fetchLikes() {
@@ -66,10 +71,4 @@
   };
   </script>
   
-  <style scoped>
-  .like-component {
-    display: flex;
-    align-items: center;
-  }
-  </style>
   
