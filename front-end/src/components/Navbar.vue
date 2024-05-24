@@ -8,10 +8,8 @@
     </router-link>
 
     <ul class="flex gap-3 w-[30%] justify-around cursor-pointer">
-      <li class="font-bold text-2xl"><router-link to="./all">All</router-link></li>
-      <li class="font-bold text-2xl"><router-link to="./feed">Feed</router-link></li>
-      <li class="font-bold text-2xl"><router-link to="./feasters">Feasters</router-link></li>
-      <li class="font-bold text-2xl"><router-link to="./fans">Fans</router-link></li>
+        <li class="font-bold text-2xl"><router-link to="./">Grid</router-link></li>
+        <li class="font-bold text-2xl"><router-link to="./all">List</router-link></li>
     </ul>
 
     <div class="flex gap-6 text-base h-[50%] items-center">

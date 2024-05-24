@@ -12,18 +12,10 @@
                 <div class="flex flex-col">
                     <p>Posts</p>
                     <p>{{ posts.length }}</p>
-                </div>                  
-                <div class="flex flex-col">
-                    <p>Followers</p>
-                    <p>0</p>
-                </div>                  
-                <div class="flex flex-col">
-                    <p>Following</p>
-                    <p>0</p>
-                </div>                                   
+                </div>                                                   
                 <div class="flex flex-col">
                     <p>Liked</p>
-                    <p>0</p>
+                    <p>{{ likedPosts.length }}</p>
                 </div>                  
             </div>
 
@@ -31,6 +23,8 @@
     </div>
 </template>
 <script>
+import axios from '../axios';
+
 export default {
     name: 'ProfileAbout',
     props: {
@@ -41,5 +35,23 @@ export default {
             type: Array,
         },
     },
+    data() {
+        return {
+            likedPosts: [],
+        };
+    },
+    created() {
+        this.fetchLikedPosts();
+    },
+    methods: {
+        async fetchLikedPosts() {
+            const response = await axios.get(`likes/?user_id=${this.userProfile.id}`, {
+                headers: {
+                    Authorization: `token ${localStorage.getItem('token')}`
+                }
+            });
+            this.likedPosts = response.data;
+        }
+    }
 }
 </script>

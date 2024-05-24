@@ -3,7 +3,6 @@
     <div id="posts-container" class="flex flex-col items-center w-[60%] rounded-3xl text-black/80">
       <div class="flex flex-col w-[100%] gap-2 mx-4 bg-black/10">
         <img v-if="post.image_url" :src="post.image_url" alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
-        <img v-if="!post.image_url" src="../assets/bearded.jpg" alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
         
         
         <div class="flex self-end mx-4">
@@ -12,7 +11,7 @@
             <Like :postId="post.post" />
           </div>
 
-          <div v-if="post.user == user?.id" class="flex">
+          <div v-if="user && post.user == user?.id" class="flex">
             <img src="../assets/edit.png" title="edit" class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#ea8b1f]/80 rounded-full p-2 border-2 border-white" @click="toggleEdit">
             <img src="../assets/delete.png" title="delete" class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#ba2222]/80 rounded-full p-2 border-2 border-white" @click="deletePost">
           </div>
@@ -29,7 +28,7 @@
         </div>
 
         <div v-else class="flex flex-col w-[90%] gap-4 mx-4 px-4 text-black/80">
-          <h2 class="text-2xl font-bold"> {{ post.title }}</h2>
+          <h2 class="text-3xl font-bold"> {{ post.title }}</h2>
           <p class="text-lg"> {{ post.content }}</p>
           <p class="font-bold"> {{ new Date(post.date).toLocaleString('es-ES') }}</p>
         </div>
