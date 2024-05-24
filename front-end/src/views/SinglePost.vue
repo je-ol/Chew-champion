@@ -7,12 +7,12 @@
         
         
         <div class="flex self-end mx-4">
-          <div>
-            <img src="../assets/heart.png" alt="" class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#F1F2F6]/80 rounded-full p-1 border-2 border-white">
+          <!-- LIKE -->
+          <div class="flex items-center mr-6 text-2xl font-bold">
             <Like :postId="post.post" />
-            
           </div>
-          <div v-if="post.user === user.id">
+
+          <div v-if="post.user == user?.id" class="flex">
             <img src="../assets/edit.png" title="edit" class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#ea8b1f]/80 rounded-full p-2 border-2 border-white" @click="toggleEdit">
             <img src="../assets/delete.png" title="delete" class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#ba2222]/80 rounded-full p-2 border-2 border-white" @click="deletePost">
           </div>
@@ -100,6 +100,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from '../axios';
 import Like from '../components/Like.vue';
+import { useAuthStore } from '../store/auth';
 
 export default {
   name: 'SinglePost',
@@ -107,11 +108,9 @@ export default {
     Like,
   },
   props: {
-    user: {
-      type: Object,
-    }
   },
   setup(props) {
+    const { user } = useAuthStore();
     const route = useRoute();
     const post = ref(null);
     const comments = ref([]);
@@ -122,6 +121,7 @@ export default {
     const posts = ref([]);
 
     const fetchPost = async () => {
+      console.log(user)
       try {
         const response = await axios.get(`/posts/${route.params.post}/`, {
           headers: {
@@ -316,6 +316,7 @@ export default {
       fetchPosts,
       posts,
       timeAgo,
+      user,
     };
   }
 };

@@ -1,20 +1,33 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
+// store/auth.js
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
-export const useAuthStore = defineStore("auth", {
-    state: () => ({
-        authUser: null
-    }),
-    getters: {
-        user: (state) => state.authUser
+export const useAuthStore = defineStore('auth', {
+  state: () => ({
+    user: null,
+    token: localStorage.getItem('token') || '',
+  }),
+  actions: {
+    async getUser() {
+      if (!this.token) {
+        this.user = null;
+        return;
+      }
+      try {
+        const response = await axios.get('/users/current_user/', {
+          headers: {
+            'Authorization': 'token ' + this.token,
+          },
+        });
+        this.user = response.data;
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        this.user = null;
+      }
     },
-    actions: {
-        getToken() {
-            return localStorage.getItem('token');
-        },
-        getUser() {
-            const localUser = localStorage.getItem('user');
-            this.authUser = localUser ? JSON.parse(localUser) : null;
-        }
-    }
+    setToken(token) {
+      this.token = token;
+      localStorage.setItem('token', token);
+    },
+  },
 });

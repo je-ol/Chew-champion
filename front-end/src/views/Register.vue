@@ -27,7 +27,8 @@
 
                 <button class="text-xl font-extrabold bg-[#FA8531] py-2 px-6 rounded-md [text-shadow:_1px_1px_1px_rgb(0_0_0_/_60%)]"
                 >REGISTER</button>
-                <p class="font-semibold cursor-pointer">Already have an account? <span class="underline">Login</span></p>
+                <p class="font-semibold cursor-pointer">Already have an account? 
+                    <router-link to="/login" class="underline">Login</router-link></p>
             </form>
         </div>    
     </div>
@@ -37,36 +38,47 @@
 
 <script>
 import axios from 'axios';
+import { useAuthStore } from '../store/auth';
 
 export default {
-    
-    name: 'Register',
-    data() {
-        return {
-            username: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
-        }
-    },
-    methods: {
-        async handleSubmit() {
-            const data = {
-                username: this.username,
-                email: this.email,
-                password: this.password,
-            }
-            console.log("Registering user...");
-            console.log(data);
+  name: 'Register',
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
+  },
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      const data = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      };
+      if (this.password !== this.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+      console.log("Registering user...");
 
-            try {
-            const response = await axios.post('https://chew-champion-43c72340b77a.herokuapp.com/signup/', data)
-            console.log(response);
-            this.$router.push('/login');
-            } catch (error) {
-                console.error(error);
-            }
+      try {
+        const response = await axios.post('https://chew-champion-43c72340b77a.herokuapp.com/signup/', data);
+        if (response.status === 200) {
+          alert("Registered successfully");
+          this.authStore.setToken(response.data.token);
+          await this.authStore.getUser();
+          this.$router.push('/');
         }
+      } catch (error) {
+        console.error(error);
+      }
     }
-}
+  }
+};
 </script>

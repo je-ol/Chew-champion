@@ -1,48 +1,75 @@
 <template>
-    <div> {{ likes }}</div>
-</template>
-<script>
-import axios from '../axios';
-export default {
+    <img 
+        src="../assets/heart.png" 
+        alt="Like button" 
+        class="mr-4 cursor-pointer w-[48px] h-[48px] bg-[#F1F2F6]/80 rounded-full p-1 border-2 border-white"
+        @click="likePost"
+      />
+      <span>{{ likes }}</span>
+  </template>
+  
+  <script>
+  import axios from '../axios';
+  
+  export default {
     name: 'Like',
     props: {
-        
-
-    },
-    created() {
-        this.fetchLikes();
+      postId: {
+        type: Number,
+        required: true
+      }
     },
     data() {
-        return {
-            likes: 0
-        }
+      return {
+        likes: 0,
+        isLiked: false,
+      };
+    },
+    created() {
+      this.fetchLikes();
     },
     methods: {
-        async fetchLikes() {
-            const response = await axios.get(`/likes/`, {
-                headers: {
-                    Authorization: `token ${localStorage.getItem('token')}`
-                },
-            });
-            const allLikes = response.data;
-            allLikes.forEach(like => {
-                if (this.postId === like.post) {
-                    this.likes = like.count;
-                }
-                
-            });
-
-        },
-
-        /* async likePost() {
-            if (this.isLiked) {
-                this.likeCount -= 1;
-            } else {
-                this.likeCount += 1;
+      async fetchLikes() {
+        try {
+          const response = await axios.get(`/likes/`, {
+            headers: {
+              Authorization: `token ${localStorage.getItem('token')}`
             }
-            this.isLiked = !this.isLiked;
-            await this.$emit('like', this.postId, this.isLiked);
-        } */
+          });
+          console.log(response.data);
+          const allLikes = response.data;
+          this.likes = allLikes.filter(like => like.post === this.postId).length;
+        } catch (error) {
+          console.error('Error fetching likes:', error);
+        }
+      },
+      async likePost() {
+        if (this.isLiked) {
+          alert('You have already liked this post');
+          return;
+        }
+  
+        try {
+          await axios.post(`/posts/${this.postId}/like/`, {}, {
+            headers: {
+              Authorization: `token ${localStorage.getItem('token')}`
+            }
+          });
+          this.likes += 1;
+          this.isLiked = true;
+          this.$emit('like', this.postId, this.isLiked);
+        } catch (error) {
+          console.error('Error liking post:', error);
+        }
+      }
     }
-}
-</script>
+  };
+  </script>
+  
+  <style scoped>
+  .like-component {
+    display: flex;
+    align-items: center;
+  }
+  </style>
+  

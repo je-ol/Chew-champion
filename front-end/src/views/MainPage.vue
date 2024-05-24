@@ -1,7 +1,8 @@
 <template>
     <div id="container" 
     class="flex flex-row w-[100%] justify-center gap-[3%] mt-[80px]">
-        <div id="content" class="grid grid-cols-3 grid-rows-3 gap-2  w-[70%] h-[630px] my-10 rounded-3xl">
+        <p v-if="!this.user" class="m-auto text-center">Login or register to have full access to the blog!</p>
+        <div v-else="this.user" id="content" class="grid grid-cols-3 grid-rows-3 gap-2  w-[70%] h-[630px] my-10 rounded-3xl">
             <div
                 v-for="(post, index) in posts.slice(0, 5)"
                 :key="index"
@@ -40,12 +41,19 @@
 </template>
 <script>
 import axios from '../axios';
+import { computed } from 'vue';
+import { useAuthStore } from '../store/auth';
 import CreateButton from '../components/CreateButton.vue';
 
 export default {
     name: 'MainPage',
     components: {
         CreateButton
+    },
+    setup() {
+        const authStore = useAuthStore();
+        const user = computed(() => authStore.user);
+        return { authStore, user };
     },
     data() {
         return {

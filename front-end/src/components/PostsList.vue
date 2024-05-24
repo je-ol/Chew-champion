@@ -2,7 +2,7 @@
   <div id="list-container" class="flex w-[100%] h-[100%] mt-[80px] pt-[34px] gap-[3%] justify-center">
     <div id="posts-container" class="flex flex-col items-center w-[70%] gap-1 rounded-3xl">
       <div v-for="(post, index) in posts" :key="index" class="flex flex-col w-[90%] gap-1 bg-black/10 rounded-sm my-6" :class="{ 'hover:bg-black/30': true }">
-        <img :src=post.image_url alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
+        <img :src="post.image_url" alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
         <div class="flex flex-col w-[80%] gap-2 m-4 px-2 text-black/80">
           <h2 class="text-2xl font-bold">{{ post.title }}</h2>
           <p class="text-md">{{ post.content.slice(0, 250) }}...</p>
@@ -21,7 +21,8 @@ export default {
   name: 'PostsList',
   props: {
     posts: {
-      type: Array
+      type: Array,
+      required: true
     }
   },
   mounted() {

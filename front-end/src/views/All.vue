@@ -1,64 +1,56 @@
 <template>
-  <PostsList :posts="posts" :limit="limit" v-if="posts.length" @load-more="loadMorePosts" />
-  <div v-else class="text-center">Loading posts...</div>
-  <CreateButton />
+  <PostsList :posts="visiblePosts" @load-more="loadMorePosts" />
   <div v-if="loading" class="text-center mt-4">Loading more posts...</div>
 </template>
 
 <script>
 import PostsList from '../components/PostsList.vue';
-import CreateButton from '../components/CreateButton.vue';
 import axios from '../axios';
 
 export default {
   name: 'All',
   components: {
     PostsList,
-    CreateButton,
   },
   data() {
     return {
-      posts: [],
+      posts: [], // All posts fetched from the server
+      visiblePosts: [], // Posts currently visible to the user
       loading: false,
-      allPostsLoaded: false,
-      offset: 0, // Tracks the offset for fetching the next set of posts
-      limit: 4, // Number of posts to fetch in each request
+      limit: 4, // Number of posts to display per load
+      currentOffset: 0, // Offset for simulating pagination
     };
   },
   async created() {
-    await this.loadMorePosts();
+    await this.fetchAllPosts();
+    this.loadMorePosts();
   },
   methods: {
-    async loadMorePosts() {
-      if (this.loading || this.allPostsLoaded) return;
+    async fetchAllPosts() {
       this.loading = true;
-
       try {
         const response = await axios.get(`/posts/`, {
           headers: {
             Authorization: `token ${localStorage.getItem('token')}`,
           },
-          params: {
-            offset: this.offset,
-            limit: this.limit,
-          },
         });
 
-        // Check if the response data has any length
-        this.hasMoreToLoad = response.data.length > 0;
-
-        // Update the posts array only if there's new data
-        if (this.hasMoreToLoad) {
-          const combinedPosts = [...this.posts, ...response.data];
-          this.posts = combinedPosts.reverse(); // Reverse the array to display newest posts first
-          this.offset += this.limit; // Update offset for next request
-        } else {
-          this.allPostsLoaded = true;
-        }
+        this.posts = response.data.reverse(); // Reverse to show newest posts first
       } catch (error) {
         console.error('Error fetching posts:', error);
       } finally {
         this.loading = false;
+      }
+    },
+    loadMorePosts() {
+      if (this.loading) return;
+
+      const newPosts = this.posts.slice(this.currentOffset, this.currentOffset + this.limit);
+      this.visiblePosts = [...this.visiblePosts, ...newPosts];
+      this.currentOffset += this.limit;
+
+      if (this.currentOffset >= this.posts.length) {
+        this.loading = false; // No more posts to load
       }
     },
   },
