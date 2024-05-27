@@ -9,6 +9,7 @@ import Feasters from '../views/Feasters.vue'
 import Fans from '../views/Fans.vue'
 import NewPost from '../views/NewPost.vue'
 import SinglePost from '../views/SinglePost.vue'
+import PostsList from '../components/PostsList.vue'
 
 const routes = [
     {path: '/', component: MainPage, meta: {title: 'Main Page'}},
@@ -22,6 +23,15 @@ const routes = [
     {path: '/new-post', component: NewPost, meta: {title: 'New post'}},
     {path: '/profile:user', component: Profile, meta: {title: 'Profile'}},
     {path: '/:post', component: SinglePost, meta: {title: 'Post'}},
+    {
+      path: '/posts',
+      name: 'PostList',
+      component: PostsList,
+      props: route => {
+        const posts = route.query.posts ? JSON.parse(route.query.posts) : [];
+        return { posts };
+      },
+    },
 
 
 ]

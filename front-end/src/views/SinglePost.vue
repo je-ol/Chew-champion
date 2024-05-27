@@ -1,7 +1,7 @@
 <template>
   <div id="postpage-container" v-if="post" class="flex justify-evenly w-[100%] mt-[80px] py-8">
     <div id="posts-container" class="flex flex-col items-center w-[60%] rounded-3xl text-black/80">
-      <div class="flex flex-col w-[100%] gap-2 mx-4 bg-black/10">
+      <div class="flex flex-col w-[100%] gap-2 mx-4 bg-black/10 rounded-sm shadow-md">
         <img v-if="post.image_url" :src="post.image_url" alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
         
         
@@ -44,6 +44,7 @@
 
     </div>
   </div>
+  <CreateButton />
 </template>
 
 <script>
@@ -56,6 +57,7 @@ import ReadMore from '../components/ReadMore.vue';
 import Author from '../components/Author.vue';
 import { timeAgo } from '../utils/timeAgo.js';
 import CommentSection from '../components/CommentSection.vue';
+import CreateButton from '../components/CreateButton.vue';
 
 export default {
   name: 'SinglePost',
@@ -63,7 +65,8 @@ export default {
     Like,
     ReadMore,
     Author,
-    CommentSection
+    CommentSection,
+    CreateButton,
   },
   props: {
   },

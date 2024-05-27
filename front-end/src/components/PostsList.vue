@@ -1,6 +1,9 @@
 <template>
   <div id="list-container" class="flex w-[100%] h-[100%] mt-[80px] pt-[34px] gap-[3%] justify-center">
     <div id="posts-container" class="flex flex-col items-center w-[70%] gap-1 rounded-3xl">
+      <div v-if="posts.length === 0" class="text-center text-2xl text-gray-500">
+        No posts found
+      </div>
       <div v-for="(post, index) in posts" :key="index" class="flex flex-col w-[90%] gap-1 bg-black/10 rounded-sm my-6" :class="{ 'hover:bg-black/30': true }">
         <img :src="post.image_url" alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
         <div class="flex flex-col w-[80%] gap-2 m-4 px-2 text-black/80">
@@ -17,13 +20,15 @@
 </template>
 
 <script>
+import { useAuthStore } from '../store/auth';
+
 export default {
   name: 'PostsList',
-  props: {
-    posts: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    posts() {
+      const postStore = useAuthStore();
+      return postStore.filteredPosts;
+    },
   },
   mounted() {
     this.createObserver();

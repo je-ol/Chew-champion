@@ -1,16 +1,20 @@
 <template>
   <PostsList :posts="visiblePosts" @load-more="loadMorePosts" />
   <div v-if="loading" class="text-center mt-4">Loading more posts...</div>
+  <CreateButton />
 </template>
 
 <script>
 import PostsList from '../components/PostsList.vue';
 import axios from '../axios';
+import CreateButton from '../components/CreateButton.vue';
+import { useAuthStore } from '../store/auth';
 
 export default {
   name: 'All',
   components: {
     PostsList,
+    CreateButton,
   },
   data() {
     return {
@@ -36,6 +40,8 @@ export default {
         });
 
         this.posts = response.data.reverse(); // Reverse to show newest posts first
+        const postStore = useAuthStore();
+        postStore.setPosts(this.posts);
       } catch (error) {
         console.error('Error fetching posts:', error);
       } finally {

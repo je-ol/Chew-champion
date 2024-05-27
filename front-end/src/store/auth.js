@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
     token: localStorage.getItem('token') || '',
+    posts: [],
   }),
   actions: {
     async getUser() {
@@ -29,9 +30,15 @@ export const useAuthStore = defineStore('auth', {
       this.token = token;
       localStorage.setItem('token', token);
     },
+    setPosts(posts) {
+      this.posts = posts;
+    },
   },
   persist: {
     storage: sessionStorage,
     paths: ['user'],
+  },
+  getters: {
+    filteredPosts: (state) => state.posts,
   },
 });

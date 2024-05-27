@@ -1,15 +1,16 @@
 <template>
-    <div id="posts-cards" class="flex flex-col items-center p-5 rounded-3xl gap-5 text-black/60 my-4">
-        <h2 class="text-xl font-bold">READ MORE</h2>
-        <div v-for="(post, index) in posts.slice(0, 4)" :key="index" class="h-[250px] w-[80%] bg-black/10">
-        <router-link :to="`/${post.post}`">
-            <img :src=post.image_url alt="" class="object-cover h-[70%] w-[100%]">
-            <h3> {{ post.title }}</h3>
-            <p> {{ post.content.slice(0, 25) }}...</p>        
+    <div id="posts-cards" class="flex flex-col items-center p-5 rounded-3xl gap-7 text-black/60 my-4">
+      <h2 class="text-xl font-bold">READ MORE</h2>
+      <div v-for="(post, index) in posts.slice(0, 4)" :key="index" class="post-card h-[250px] w-[80%] bg-black/10 rounded-sm transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-black/20 shadow-lg">
+        <router-link :to="`/${post.post}`" class="block h-full">
+          <img :src="post.image_url" alt="" class="object-cover h-[70%] w-[100%]">
+          <h3 v-if="post.title.length > 19" class="text-lg font-bold mx-2">{{ post.title.slice(0, 19) }}...</h3>
+          <h3 v-else="" class="text-lg font-bold mx-2">{{ post.title.slice(0, 20) }}</h3>
+          <p class="text-sm mx-2">{{ post.content.slice(0, 45) }}...</p>
         </router-link>
-        </div>
+      </div>
     </div>
-</template>
+  </template>
 
 <script>
 import { ref, onMounted, watch } from 'vue';

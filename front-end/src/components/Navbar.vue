@@ -7,13 +7,14 @@
       </div>
     </router-link>
 
-    <ul class="flex gap-3 w-[30%] justify-around cursor-pointer">
-        <li class="font-bold text-2xl"><router-link to="./">Grid</router-link></li>
-        <li class="font-bold text-2xl"><router-link to="./all">List</router-link></li>
-    </ul>
-
+    <div class="flex gap-3 w-[30%] justify-around items-center cursor-pointer">
+        <p class="font-bold text-2xl"><router-link to="./">Grid</router-link></p>
+        <p class="font-bold text-2xl"><router-link to="./all">List</router-link></p>
+        <SearchBar />
+    </div>
+    
     <div class="flex gap-6 text-base h-[50%] items-center">
-      <img src="../assets/dark-mode.png" alt="" @click.prevent="changeTheme">
+<!--       <img src="../assets/dark-mode.png" alt="" @click.prevent="changeTheme"> -->
       <div v-if="!user" class="flex gap-6 text-base h-[50%] items-center">
         <router-link to="./login" class="bg-[#758bfd] px-4 py-2 rounded-md font-bold">LOGIN</router-link>
         <router-link to="./register" class="bg-[#758bfd] px-4 py-2 rounded-md font-bold">REGISTER</router-link>
@@ -34,9 +35,14 @@
 import { computed } from 'vue';
 import { useAuthStore } from '../store/auth';
 import { getAvatarUrl } from '../utils/getAvatars.js';
+import SearchBar from './SearchBar.vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Navbar',
+  components: {
+    SearchBar,
+  },
   setup() {
     const authStore = useAuthStore();
     const user = computed(() => authStore.user);
@@ -44,10 +50,11 @@ export default {
     const handleLogout = async () => {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+      sessionStorage.clear();
       await authStore.getUser(); // Update the store state
       alert("Hope to see you back soon!");
       authStore.$reset(); // Reset the store to clear the user
-      this.$router.push('/');
+      router.push('/');
     };
 
     return {

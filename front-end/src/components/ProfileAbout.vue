@@ -1,13 +1,13 @@
 <template>
     <div class="flex w-[100%] h-[40%] bg-black/5">
-        <div class="flex flex-col w-[25%] h-[100%] items-center justify-evenly px-16 rounded-lg ">
-            <img :src="getAvatarUrl(userProfile.id)" alt="" class="w-[100px] h-[100px] border-white border-4 rounded-full">
-            <h1 class="text-2xl font-bold"> {{ userProfile.username }}</h1>
+        <div class="flex flex-col w-[25%] h-[100%] items-center justify-center gap-1 px-16 rounded-lg ">
+            <img :src="getAvatarUrl(userProfile?.id)" alt="" class="w-[100px] h-[100px] border-white border-4 rounded-full">
+            <h1 class="text-2xl font-bold"> {{ userProfile?.username }}</h1>
             <p>Joined </p>
             <p>23 Sep 2033</p>
         </div>
         <div class="flex flex-col items-start w-[100%] h-[100%] gap-4 py-6 px-16 ">
-            <h2 class="text-xl font-bold">About {{ userProfile.username }}</h2>
+            <h2 class="text-xl font-bold">About {{ userProfile?.username }}</h2>
             <div class="flex justify-around w-[80%] text-2xl">
                 <div class="flex flex-col">
                     <p>Posts</p>
@@ -41,17 +41,26 @@ export default {
             likedPosts: [],
         };
     },
-    created() {
-        this.fetchLikedPosts();
+    watch: {
+        userProfile() {
+            this.fetchLikedPosts();
+        },
     },
     methods: {
         async fetchLikedPosts() {
-            const response = await axios.get(`likes/?user_id=${this.userProfile.id}`, {
-                headers: {
-                    Authorization: `token ${localStorage.getItem('token')}`
+            if(this.userProfile) {
+                try {
+                    const response = await axios.get(`likes/?user_id=${this.userProfile.id}`, {
+                        headers: {
+                            Authorization: `token ${localStorage.getItem('token')}`
+                        }
+                    });
+                    this.likedPosts = response.data;
+                } catch (error) {
+                    console.error(error);
+                
                 }
-            });
-            this.likedPosts = response.data;
+            }
         },
         getAvatarUrl,
     }
