@@ -41,7 +41,6 @@
               Authorization: `token ${localStorage.getItem('token')}`
             }
           });
-          console.log(response.data);
           const allLikes = response.data;
           this.likes = allLikes.filter(like => like.post === this.postId).length;
         } catch (error) {

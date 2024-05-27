@@ -59,12 +59,11 @@ export default {
     },
     data() {
         return {
-            posts: [] // Initialize posts array
+            posts: []
         }
     },
     created() {
-        this.fetchPosts(); // Call the method to fetch images when the component is created
-        console.log("Fetching posts...");
+        this.fetchPosts();
     },
     methods: {
         async fetchPosts() {
@@ -74,8 +73,7 @@ export default {
                 Authorization: `token ${localStorage.getItem('token')}`
                 }
             });
-            this.posts = response.data.reverse(); // Reverse the array to display newest posts first
-            console.log(this.posts);
+            this.posts = response.data.reverse(); // display newest posts first
             } catch (error) {
             console.error('Error fetching posts:', error);
             }

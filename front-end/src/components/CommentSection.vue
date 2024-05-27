@@ -76,8 +76,7 @@ import { timeAgo } from '../utils/timeAgo.js';
             });
 
             const sendComment = async () => {
-                console.log('Sending comment:', newComment.value);
-                try {
+                 try {
                     await axios.post('comments/', 
                     {
                         content: newComment.value,

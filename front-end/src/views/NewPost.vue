@@ -56,8 +56,6 @@ export default {
     this.blogPhoto = event.target.files[0];
   },
   async publishBlog() {
-  console.log("Blog Title:", this.blogTitle);
-  console.log("Blog HTML:", this.blogHTML);
 
     try {
       const formData = new FormData();
@@ -72,10 +70,6 @@ export default {
       formData.append("content", this.blogHTML), {
         type: 'text'
       };
-
-/*       for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-      } */
 
     // Send formData with both image and JSON data
       const response = await axios.post("/posts/upload_image/", formData, {

@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex justify-around fixed items-center h-[80px] w-[100%] text-white" :class="theme">
+  <nav class="flex justify-around fixed items-center h-[80px] w-[100%] text-white z-[10]" :class="theme">
     <router-link to="./">
       <div class="flex gap-3 items-center cursor-pointer text-white">
         <img src="../assets/burger.png" alt="">
@@ -46,6 +46,7 @@ export default {
   setup() {
     const authStore = useAuthStore();
     const user = computed(() => authStore.user);
+    const router = useRouter();
 
     const handleLogout = async () => {
       localStorage.removeItem('user');
