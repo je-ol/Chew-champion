@@ -4,8 +4,7 @@
 2. Roadmap
 3. Contributing
 4. License
-5. Contact
-6. Acknowledgments
+5. Deployment
 
 ## **About The Project**
 
@@ -15,7 +14,7 @@ Chew champion is a full stack project aimed to be a space where you can share co
 
 The main page features a grid structure where you can see the latest posts, but you can also visit the list section where you can browse through every single post in an infinite scroll. If there is a specific type of post you want to look for, you can use the search on the navbar. 
 
-## Build With:
+### Build With:
 This is my first project using Vue on the front end along with Pinia for state management. Other technologies used:
 
 - ![](https://img.shields.io/badge/vue.js-navy?style=for-the-badge&logo=vue.js)
@@ -40,5 +39,5 @@ If you have any changes that would make this better, just fork the repo and crea
 ## License:
 Distributed under the MIT License
 
-#### Netlify deployment:
+## Netlify deployment:
 https://chew-champion.netlify.app/
