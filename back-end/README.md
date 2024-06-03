@@ -75,7 +75,7 @@ This is the backend for our application, built with Django and Django Rest Frame
   - **Description:** Update a specific comment by its ID.
   - **Requirements:** Token in the Authorization header and updated comment data in the request body.
 
-- **`comments/<id>/`**
-  - **Method:** DELETE
-  - **Description:** Delete a specific comment by its ID.
+- **`/likes/`**
+  - **Method:** GET, POST
+  - **Description:** Post request to like and get request to get likes for a spicific post.
   - **Requirements:** Token in the Authorization header.
