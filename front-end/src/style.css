@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Lilita+One&family=Rubik+Doodle+Shadow&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #F1F2F6;
+    
+}
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#logo {
+    font-family: "Lilita One", sans-serif;
+}
+
+#navbar .navLink.active {
+    color: rgba(255, 255, 255, 0.566);
+}
+
+#content :nth-child(1) {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+}
+
+#content :nth-child(5) {
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 2;
+    background-color: #ff9602;
+}
+
