@@ -34,7 +34,7 @@ export default {
     async handleSubmit() {
       const data = { username: this.username, password: this.password };
       try {
-        const response = await axios.post('https://chew-champion-ea4753cf27e6.herokuapp.com//login/', data);
+        const response = await axios.post('https://chew-champion-ea4753cf27e6.herokuapp.com/login/', data);
         if (response.status === 200) {
           alert("Logged in successfully");
           this.authStore.setToken(response.data.token);
