@@ -8,7 +8,8 @@ export default {
       }
     },
     screens: {
-      'md': { 'min': '1280px', 'max': '1706px' },
+      'lg': { 'min': '1281px', 'max': '1536px' },
+      'md': { 'min': '1028px', 'max': '1280px' },
       /* 'lg': { 'min': '1535px', 'max': '1705px' }, */
     }
   },
