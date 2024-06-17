@@ -10,7 +10,6 @@ export default {
     screens: {
       'lg': { 'min': '1281px', 'max': '1536px' },
       'md': { 'min': '1028px', 'max': '1280px' },
-      /* 'lg': { 'min': '1535px', 'max': '1705px' }, */
     }
   },
   plugins: [],

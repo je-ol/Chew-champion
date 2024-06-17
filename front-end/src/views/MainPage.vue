@@ -11,9 +11,9 @@
                 :class="{ 'hover:bg-black/30': true }">
                 <router-link :to="`/${post.post}`">
                     <div class="px-2 bg-black/50">
-                        <h1 v-if="post.title.length > 34" class=" text-lg text-[#F1F2F6] font-semibold">{{ post.title.slice(0, 34) }}...</h1>
-                        <h1 v-else="" class=" text-lg text-[#F1F2F6] font-semibold">{{ post.title }}</h1>
-                        <p class=" text-white/90">{{ post.content.slice(0, 38) }}...</p>
+                        <h1 v-if="post.title.length > 34" class=" text-lg md:text-sm text-[#F1F2F6] font-semibold">{{ post.title.slice(0, 32) }}...</h1>
+                        <h1 v-else="" class=" text-lg md:text-sm text-[#F1F2F6] font-semibold">{{ post.title }}</h1>
+                        <p class=" text-white/90 md:text-xs">{{ post.content.slice(0, 38) }}...</p>
                     </div>
                 </router-link>
             </div>
@@ -21,7 +21,7 @@
         <div id="side-section"
         class="flex flex-col items-center w-[18%] h-[90%] my-10 rounded-3xl text-black/60 ">
             <div class="flex flex-col items-center justify-center gap-1 w-[100%] h-[80%] my-auto text-center" >
-                <h2 class="text-xl md:text-md font-bold">About Chew Champion</h2>
+                <h2 class="text-xl md:text-[18px] font-bold">About Chew Champion</h2>
                 <div class="flex w-[120px] h-[116px] md:w-[84px] md:h-[80px] bg-slate-500/20 rounded-full my-4 md:my-1" >
                     <img src="../assets/burger.png" alt=""
                 class="w-[80px] h-[80px] md:w-[42px] md:h-[42px] m-auto">
