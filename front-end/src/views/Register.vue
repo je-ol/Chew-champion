@@ -68,7 +68,7 @@ export default {
       console.log("Registering user...");
 
       try {
-        const response = await axios.post('https://chew-champion-43c72340b77a.herokuapp.com/signup/', data);
+        const response = await axios.post('https://chew-champion-ea4753cf27e6.herokuapp.com//signup/', data);
         if (response.status === 200) {
           alert("Registered successfully");
           this.authStore.setToken(response.data.token);

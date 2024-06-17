@@ -1,8 +1,8 @@
 <template>
     <div id="container" 
-    class="flex flex-row w-[100%] justify-center gap-[2%] mt-[80px]">
+    class="flex flex-row w-[100%] h-[100%] justify-center gap-[2%] mt-[80px] md:mt-[40px]">
         <p v-if="!this.user" class="m-auto text-center">Login or register to have full access to the blog!</p>
-        <div v-else="this.user" id="content" class="grid grid-cols-3 grid-rows-3 gap-3  w-[70%] h-[630px] my-10 rounded-3xl">
+        <div v-else="this.user" id="content" class="grid grid-cols-3 grid-rows-3 gap-3  w-[70%] h-[30%]  my-10 rounded-3xl">
             <div
                 v-for="(post, index) in posts.slice(0, 5)"
                 :key="index"
@@ -19,14 +19,14 @@
             </div>
         </div>
         <div id="side-section"
-        class="flex flex-col items-center w-[20%] h-[630px] my-10 rounded-3xl text-black/60">
-            <div class="flex flex-col items-center w-[80%] h-[400px] mt-[30px] text-center " >
-                <h2 class="text-xl font-bold">About Chew Champion</h2>
-                <div class="flex w-[120px] h-[116px] bg-slate-500/20 rounded-full my-4" >
+        class="flex flex-col items-center w-[20%] h-[80%] my-10 rounded-3xl text-black/60">
+            <div class="flex flex-col items-center w-[80%] h-[400px] md:h-[260px] mt-[30px] md:mt-0 text-center " >
+                <h2 class="text-xl md:text-sm font-bold">About Chew Champion</h2>
+                <div class="flex w-[120px] h-[116px] md:w-[64px] md:h-[60px] bg-slate-500/20 rounded-full my-4 md:my-0" >
                     <img src="../assets/burger.png" alt=""
-                class="w-[80px] h-[80px] m-auto">
+                class="w-[80px] h-[80px] md:w-[42px] md:h-[42px] m-auto">
                 </div>
-                <p class="mb-4">Chew Champion is a fun blog about anything related to competitive eating, as well as eating challenges. 
+                <p class="mb-4 md:text-xs"><!-- Chew Champion is a fun blog about anything related to competitive eating, as well as eating challenges.  -->
                     Are you a fan of the sport or a competitor yourself? Then you're more than welcome to join and share your experiences or opinions with our community! </p>
             </div>
             <hr class="border-black w-[80%]">
