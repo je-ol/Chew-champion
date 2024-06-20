@@ -2,7 +2,7 @@
     <div>
       <form @submit.prevent="handleSearch" class="text-black">
         <input type="text" v-model="search" placeholder="Search posts..."
-        class="w-[260px] h-[40px] rounded-md p-4">
+        class="w-[260px] h-[40px] md:h-[32px] rounded-md p-4">
       </form>
     </div>
   </template>

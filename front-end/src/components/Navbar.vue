@@ -1,30 +1,30 @@
 <template>
-  <nav class="flex justify-around fixed items-center h-[80px] w-[100%] text-white z-[10]" :class="theme">
+  <nav class="flex justify-around fixed items-center h-[80px] md:h-[56px] w-[100%] text-white z-[10]" :class="theme">
     <router-link to="./">
       <div class="flex gap-3 items-center cursor-pointer text-white">
-        <img src="../assets/burger.png" alt="">
-        <p class="text-3xl uppercase" id="logo">Chew Champion</p>
+        <img src="../assets/burger.png" alt="" class="md:h-[48px] md:w-[48px]">
+        <p class="text-3xl md:text-2xl uppercase" id="logo">Chew Champion</p>
       </div>
     </router-link>
 
-    <div class="flex gap-3 w-[30%] justify-around items-center cursor-pointer">
-        <p class="font-bold text-2xl"><router-link to="./">Grid</router-link></p>
-        <p class="font-bold text-2xl"><router-link to="./all">List</router-link></p>
+    <div class="flex gap-9 w-[30%] justify-around items-center cursor-pointer">
+        <p class="font-bold text-2xl md:text-xl"><router-link to="./">Grid</router-link></p>
+        <p class="font-bold text-2xl md:text-xl"><router-link to="./all">List</router-link></p>
         <SearchBar />
     </div>
     
     <div class="flex gap-6 text-base h-[50%] items-center">
 <!--       <img src="../assets/dark-mode.png" alt="" @click.prevent="changeTheme"> -->
-      <div v-if="!user" class="flex gap-6 text-base h-[50%] items-center">
+      <div v-if="!user" class="flex gap-6 text-base md:text-sm h-[50%] items-center">
         <router-link to="./login" class="bg-[#758bfd] px-4 py-2 rounded-md font-bold">LOGIN</router-link>
         <router-link to="./register" class="bg-[#758bfd] px-4 py-2 rounded-md font-bold">REGISTER</router-link>
       </div>
-      <div v-if="user" class="flex gap-6 text-base h-[50%] items-center">
+      <div v-if="user" class="flex gap-6 text-base md:text-sm h-[50%] items-center">
         <a href="javascript:void(0)" class="bg-[#758bfd] px-4 py-2 rounded-md font-bold cursor-pointer" @click="handleLogout">LOG OUT</a>
       </div>
       <router-link to="./profile">
-        <div v-if="user" class="flex h-[48px] w-[48px] bg-white/80 rounded-full cursor-pointer border-solid border-white">
-          <img :src="getAvatarUrl(user.id)" alt="" class="h-[44px] w-[46px] m-auto rounded-full cover border-solid border-white border-[1px]">
+        <div v-if="user" class="flex md:h-[40px] md:w-[40px] h-[48px] w-[48px] bg-white/80 rounded-full cursor-pointer border-solid border-white">
+          <img :src="getAvatarUrl(user.id)" alt="" class="h-[46px] w-[46px] md:h-[40px] md:w-[40px] m-auto rounded-full cover border-solid border-white border-[2px]">
         </div>
       </router-link>
     </div>

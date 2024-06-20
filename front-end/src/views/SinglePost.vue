@@ -1,8 +1,8 @@
 <template>
-  <div id="postpage-container" v-if="post" class="flex justify-evenly w-[100%] mt-[80px] py-8">
+  <div id="postpage-container" v-if="post" class="flex justify-evenly w-[100%] mt-[80px] md:mt-[60px] py-8">
     <div id="posts-container" class="flex flex-col items-center w-[60%] rounded-3xl text-black/80">
       <div class="flex flex-col w-[100%] gap-2 mx-4 bg-black/10 rounded-sm shadow-md">
-        <img v-if="post.image_url" :src="post.image_url" alt="" class="w-[100%] h-[500px] object-cover rounded-t-sm">
+        <img v-if="post.image_url" :src="post.image_url" alt="" class="w-[100%] h-[60vh] object-cover rounded-t-sm">
         <div class="flex self-end m-4">
           <!-- LIKE -->
           <div class="flex items-center mr-6 text-2xl font-bold">
@@ -15,15 +15,15 @@
         </div>
         <div v-if="isEditing" class="flex flex-col w-[90%] gap-4 m-4 px-4 text-black/80">
           <input v-model="editedTitle" type="text" class="w-full border p-2" placeholder="Edit title">
-          <textarea v-model="editedContent" class="w-full border p-2" placeholder="Edit content"></textarea>
+          <textarea v-model="editedContent" class="w-full h-[200px] border p-2" placeholder="Edit content"></textarea>
           <div class="flex gap-2">
             <button @click="saveEdit" class=" bg-[#758bfd] px-4 py-2 rounded-sm text-white">Save</button>
             <button @click="toggleEdit" class=" bg-gray-500 text-white px-4 py-2 rounded-sm">Cancel</button>
           </div>
         </div>
         <div v-else class="flex flex-col w-[90%] gap-4 mx-4 px-4 text-black/80">
-          <h2 class="text-3xl font-bold">{{ post.title }}</h2>
-          <div v-html="renderContent(post.content)" class="text-lg"></div>
+          <h2 class="text-3xl md:text-[24px] font-bold">{{ post.title }}</h2>
+          <div v-html="renderContent(post.content)" class="text-lg md:text-sm"></div>
           <p class="font-bold my-4">{{ new Date(post.date).toLocaleString('es-ES') }}</p>
         </div>
         <CommentSection :post="post" />

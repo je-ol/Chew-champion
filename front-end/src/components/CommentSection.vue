@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-col w-[100%] self-start bg-white p-8 gap-2">
+    <div class="flex flex-col w-[100%] self-start bg-white p-8 gap-2 md:text-sm">
         <h3 class="text-xl font-semibold">Comments</h3>
         <!-- Display all the comments -->
         <div v-for="(comment, index) in filteredComments" :key="index" class="flex flex-col bg-slate-500/20 p-2 rounded-md">
             <div v-if="!comment.isEditing">
-                <p> {{ comment.content }}</p>
+                <p class="md:text-sm"> {{ comment.content }}</p>
                 <div class="flex justify-between items-center">
                     <p class="font-bold"> {{ comment.username }}</p>
                     
@@ -27,8 +27,8 @@
         </div>
         <!-- Create a new comment -->
         <div class="new-comment flex justify-between my-4">
-            <input type="text" class="w-[85%] h-[50px] px-2 border-2 border-gray-500/20 rounded-md" placeholder="Write a new comment..." v-model="newComment" @keydown.enter="sendComment">
-            <button class="w-[14%] h-[100%] bg-[#758bfd] px-4 py-2 rounded-md font-bold text-white" @click="sendComment">COMMENT</button>
+            <input type="text" class="w-[85%] h-[100%] px-2 border-2 border-gray-500/20 rounded-md md:text-sm" placeholder="Write a new comment..." v-model="newComment" @keydown.enter="sendComment">
+            <button class="w-[14%] h-[100%] bg-[#758bfd] px-4 py-2 rounded-md font-bold text-white md:text-[13px]" @click="sendComment">COMMENT</button>
         </div>
     </div>
 </template>
