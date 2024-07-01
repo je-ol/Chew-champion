@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[80vh] flex items-center">
+    <div class="h-[80vh] flex flex-col justify-center items-center mt-[56px]">
       <div class="flex w-[24%] h-[60%] md:h-[70%] bg-[#758BFD] m-auto rounded-3xl text-white">
         <form @submit.prevent="handleSubmit" class="flex flex-col h-[80%] w-[70%] m-auto justify-around items-center [text-shadow:_1px_1px_1px_rgb(0_0_0_/_50%)]">
           <h1 class="text-3xl md:text-2xl font-extrabold">Welcome back!</h1>
@@ -11,6 +11,7 @@
             <router-link to="/register" class="underline">Register</router-link></p>
         </form>
       </div>
+      <p class="text-indigo-700">username: visitor | password: 1234</p>
     </div>
   </template>
   
